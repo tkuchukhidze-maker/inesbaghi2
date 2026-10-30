@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="ka">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#A3D0CA">
+<title>ინეს ბაღი — საშემოდგომო ზეიმი</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="ინეს ბაღის 5–6 წლის ჯგუფის საშემოდგომო ზეიმის მოსაწვევი">
+<style>
+@font-face{font-family:"FiraGO";font-weight:400;font-display:block;src:url(assets/fonts/FiraGO-Book.woff) format("woff")}
+@font-face{font-family:"FiraGO";font-weight:700;font-display:block;src:url(assets/fonts/FiraGO-Bold.woff) format("woff")}
+@font-face{font-family:"FiraGO";font-weight:800;font-display:block;src:url(assets/fonts/FiraGO-ExtraBold.woff) format("woff")}
+
+/* Layout: a single mint "garden" world behind an arch door; content flows in one centered column of arches */
+:root{
+  color-scheme: light;
+  --mint:#A3D0CA; --mint-deep:#8EC7B7; --mint-pale:#C8E8C4; --teal:#7BB7BE; --teal-pale:#AAD0D5;
+  --pink:#D5B8CE; --navy:#0F2B35; --slate:#76959E;
+  --yellow:#EDE09D; --peach:#EDC39E; --coral:#E9A09F; --blue:#A0BAEA;
+  --rust:#D2693C; --amber:#E9963E; --paper:#FBF8EE;
+  --ff:"FiraGO","Noto Sans Georgian","Sylfaen",system-ui,sans-serif;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--mint);color:var(--navy);font-family:var(--ff);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body.locked{overflow:hidden}
+.logo{background:var(--navy);-webkit-mask:url(assets/img/logo.png) center/contain no-repeat;mask:url(assets/img/logo.png) center/contain no-repeat;aspect-ratio:625/517}
+.pattern{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2244%22%20height%3D%2244%22%3E%3Cg%20fill%3D%22%23A6D3CC%22%20stroke%3D%22%2396C9C0%22%20stroke-width%3D%224%22%3E%3Cpath%20d%3D%22M-20%2024V-2a20%2020%200%200%201%2040%200V24z%22%2F%3E%3Cpath%20d%3D%22M24%2024V-2a20%2020%200%200%201%2040%200V24z%22%2F%3E%3Cpath%20d%3D%22M2%2046V20a20%2020%200%200%201%2040%200V46z%22%2F%3E%3Cpath%20d%3D%22M46%2046V20a20%2020%200%200%201%2040%200V46z%22%2F%3E%3Cpath%20d%3D%22M-20%2068V42a20%2020%200%200%201%2040%200V68z%22%2F%3E%3Cpath%20d%3D%22M24%2068V42a20%2020%200%200%201%2040%200V68z%22%2F%3E%3Cpath%20d%3D%22M2%2090V64a20%2020%200%200%201%2040%200V90z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:44px 44px}
+
+/* ---------- leaves canvas ---------- */
+#leaves{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+
+/* ---------- GATE ---------- */
+#gate{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3vh,26px);
+  padding-block:calc(env(safe-area-inset-top,0px) + 20px) calc(env(safe-area-inset-bottom,0px) + 20px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background-color:var(--mint);transition:transform 1.5s cubic-bezier(.6,0,.3,1),opacity 1.1s ease .45s}
+#gate.pattern{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2244%22%20height%3D%2244%22%3E%3Cg%20fill%3D%22%23A6D3CC%22%20stroke%3D%22%2396C9C0%22%20stroke-width%3D%224%22%3E%3Cpath%20d%3D%22M-20%2024V-2a20%2020%200%200%201%2040%200V24z%22%2F%3E%3Cpath%20d%3D%22M24%2024V-2a20%2020%200%200%201%2040%200V24z%22%2F%3E%3Cpath%20d%3D%22M2%2046V20a20%2020%200%200%201%2040%200V46z%22%2F%3E%3Cpath%20d%3D%22M46%2046V20a20%2020%200%200%201%2040%200V46z%22%2F%3E%3Cpath%20d%3D%22M-20%2068V42a20%2020%200%200%201%2040%200V68z%22%2F%3E%3Cpath%20d%3D%22M24%2068V42a20%2020%200%200%201%2040%200V68z%22%2F%3E%3Cpath%20d%3D%22M2%2090V64a20%2020%200%200%201%2040%200V90z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")}
+#gate .top{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+#gate .top .logo{width:74px}
+#gate .eyebrow{font-weight:700;font-size:13px;letter-spacing:.12em;color:var(--navy);opacity:.75}
+
+.door{position:relative;width:min(64vw,290px,42vh);aspect-ratio:.82;flex:none}
+.frame{position:absolute;inset:0;background:var(--navy);border-radius:50% 50% 0 0/38% 38% 0 0;box-shadow:0 18px 0 -6px rgba(15,43,53,.18)}
+.opening{position:absolute;left:17%;right:17%;top:13%;bottom:0;border-radius:50% 50% 0 0/36% 36% 0 0;overflow:hidden;perspective:900px;
+  background:radial-gradient(120% 80% at 50% 70%,#FFF6D8 0%,var(--yellow) 35%,var(--peach) 70%,var(--coral) 100%)}
+.opening .inner-light{position:absolute;inset:0;background:radial-gradient(closest-side at 50% 60%,#fff 0%,rgba(255,255,255,0) 100%);opacity:0;transition:opacity 1s ease .3s}
+.leaf-door{position:absolute;top:0;bottom:0;width:50%;transition:transform 1.25s cubic-bezier(.55,.05,.25,1);backface-visibility:hidden}
+.leaf-door.l{left:0;transform-origin:0 50%;background:var(--pink)}
+.leaf-door.r{right:0;transform-origin:100% 50%;background:var(--pink)}
+.leaf-door::before{content:"";position:absolute;inset:14% 16% 8%;border:3px solid rgba(15,43,53,.16);border-radius:50% 50% 6px 6px/30% 30% 6px 6px}
+.leaf-door.l{box-shadow:inset -2px 0 0 rgba(15,43,53,.25)}
+.leaf-door .knob{position:absolute;top:56%;width:11px;height:11px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 3px var(--navy)}
+.leaf-door.l .knob{right:12%}
+.leaf-door.r .knob{left:12%}
+.keyglow{position:absolute;left:50%;top:56%;width:90px;height:90px;margin:-45px 0 0 -45px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,240,180,.95),rgba(255,240,180,0));mix-blend-mode:screen;animation:breathe 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes breathe{50%{transform:scale(1.35);opacity:.6}}
+.spark{position:absolute;width:18px;height:18px;pointer-events:none;animation:twinkle 2.6s ease-in-out infinite}
+.spark::before,.spark::after{content:"";position:absolute;left:50%;top:50%;background:#fff;border-radius:2px;transform:translate(-50%,-50%)}
+.spark::before{width:3px;height:100%}
+.spark::after{width:100%;height:3px}
+@keyframes twinkle{0%,100%{transform:scale(.2) rotate(0);opacity:0}45%{transform:scale(1) rotate(45deg);opacity:1}}
+
+#enter{font:inherit;font-weight:800;font-size:clamp(17px,4.6vw,21px);line-height:1.25;color:var(--paper);background:var(--navy);border:0;border-radius:999px;
+  padding:16px 28px;cursor:pointer;max-width:340px;text-wrap:balance;box-shadow:0 6px 0 var(--slate),0 0 0 0 rgba(237,224,157,.9);
+  animation:pulse 2.2s ease-out infinite;transition:transform .15s}
+#enter:hover{transform:translateY(-2px)}
+#enter:active{transform:translateY(3px);box-shadow:0 2px 0 var(--slate)}
+#enter:focus-visible{outline:3px solid var(--yellow);outline-offset:4px}
+@keyframes pulse{0%{box-shadow:0 6px 0 var(--slate),0 0 0 0 rgba(237,224,157,.95)}80%,100%{box-shadow:0 6px 0 var(--slate),0 0 0 22px rgba(237,224,157,0)}}
+#gate .hint{font-size:13px;opacity:.7;display:flex;align-items:center;gap:6px}
+#gate .hint svg{width:16px;height:16px}
+
+/* opening sequence */
+#gate.opening-now .leaf-door.l{transform:rotateY(-108deg)}
+#gate.opening-now .leaf-door.r{transform:rotateY(108deg)}
+#gate.opening-now .inner-light{opacity:1}
+#gate.opening-now #enter,#gate.opening-now .hint,#gate.opening-now .top{opacity:0;transition:opacity .4s}
+#gate.zoom{transform:scale(7);opacity:0;pointer-events:none}
+
+/* ---------- WORLD ---------- */
+main{position:relative;z-index:1}
+.band{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:620px;margin:0 auto}
+
+.hero{background:var(--mint);padding-block:28px 0;overflow:hidden}
+.hero .col{display:flex;flex-direction:column;align-items:center;text-align:center}
+.rainbow{position:relative;width:min(100%,460px);aspect-ratio:440/330;margin-top:6px}
+.rainbow svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rainbow path{fill:none;stroke-width:32}
+.rainbow .logo{position:absolute;left:50%;bottom:4%;width:30%;transform:translateX(-50%)}
+.eyebrow-w{margin-top:14px;font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--navy);opacity:.8}
+h1{font-weight:800;font-size:clamp(30px,8.4vw,52px);line-height:1.08;margin:14px 0 10px;text-wrap:balance;letter-spacing:-.005em}
+h1 em{font-style:normal;color:var(--rust)}
+.lead{font-size:clamp(17px,4.4vw,20px);font-weight:700;margin:0 0 30px;max-width:30ch;text-wrap:balance}
+
+.ground{height:34px;background:var(--mint-deep);border-radius:50% 50% 0 0/100% 100% 0 0;margin-top:-6px}
+
+.story{background:var(--mint-deep);padding-block:8px 48px}
+.story .col{display:grid;gap:26px}
+.story p{margin:0;font-size:17px;max-width:60ch}
+.story p.big{font-size:clamp(19px,4.8vw,22px);font-weight:700;line-height:1.45}
+
+.windows{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:end}
+.win{position:relative;border-radius:50% 50% 14px 14px/38% 38% 14px 14px;overflow:hidden;border:8px solid var(--paper);box-shadow:0 0 0 4px var(--navy);aspect-ratio:.82;background:var(--peach)}
+.win img{width:100%;height:100%;object-fit:cover;display:block}
+.win:nth-child(2){transform:translateY(-22px)}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start}
+.chip{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;padding:9px 16px 9px 10px;border-radius:999px;background:var(--paper);color:var(--navy)}
+.chip i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none}
+.chip svg{width:15px;height:15px}
+
+.details{background:var(--teal);padding-block:44px;color:var(--navy)}
+.ticket{position:relative;background:var(--paper);border-radius:28px;padding:26px 24px;display:grid;gap:18px;box-shadow:0 10px 0 rgba(15,43,53,.2)}
+.ticket h2{margin:0;font-size:14px;letter-spacing:.14em;font-weight:700;color:var(--slate)}
+.place{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.pin{width:46px;height:46px;border-radius:50% 50% 50% 4px;transform:rotate(-45deg);background:var(--coral);display:grid;place-items:center}
+.pin span{width:16px;height:16px;border-radius:50%;background:var(--paper);display:block}
+.place b{display:block;font-size:clamp(19px,5vw,23px);line-height:1.3;font-weight:800}
+.place small{display:block;font-size:16px;margin-top:4px;color:var(--navy);opacity:.8}
+.map{justify-self:start;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;color:var(--paper);background:var(--navy);text-decoration:none;padding:11px 18px;border-radius:999px}
+.map:focus-visible{outline:3px solid var(--rust);outline-offset:3px}
+.when{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.when div{background:var(--mint-pale);border-radius:16px;padding:12px 14px}
+.when small{display:block;font-size:12px;letter-spacing:.1em;font-weight:700;color:var(--slate)}
+.when b{font-size:19px;font-weight:800}
+.when em{display:block;font-style:normal;font-size:14px;font-weight:700;color:var(--slate)}
+
+.finale{background:var(--mint);padding-block:44px 70px;text-align:center;overflow:hidden}
+.finale.pattern{background-color:var(--mint)}
+.sign{width:min(78%,300px);margin:0 auto;position:relative}
+.sign svg{width:100%;display:block;overflow:visible}
+.sign svg text{font-family:var(--ff);font-weight:800;font-size:36px;fill:var(--navy);letter-spacing:.02em}
+.sign .logo{width:72%;margin:-6% auto 0}
+.finale p{font-size:clamp(19px,5vw,23px);font-weight:800;line-height:1.35;margin:26px auto 8px;max-width:26ch;text-wrap:balance}
+.heart{display:inline-block;color:var(--rust);animation:beat 1.4s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.15)}}
+.tap-hint{font-size:13px;opacity:.65;margin-top:18px}
+
+/* sound toggle */
+#sound{position:fixed;z-index:40;right:calc(14px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;
+  border:0;background:var(--navy);color:var(--paper);display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 0 var(--slate)}
+#sound svg{width:24px;height:24px}
+#sound:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+#sound .bars{display:flex;gap:3px;align-items:flex-end;height:18px}
+#sound .bars i{width:4px;background:var(--yellow);border-radius:2px;animation:eq 0.9s ease-in-out infinite}
+#sound .bars i:nth-child(2){animation-delay:-.3s}
+#sound .bars i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{0%,100%{height:5px}50%{height:18px}}
+
+/* reveal sequence after the door opens */
+body.open .rainbow path{animation:draw 1.6s cubic-bezier(.3,.1,.2,1) both}
+body.open .rainbow path:nth-child(2){animation-delay:.12s}
+body.open .rainbow path:nth-child(3){animation-delay:.24s}
+body.open .rainbow path:nth-child(4){animation-delay:.36s}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+body.open .rainbow .logo{animation:pop .8s cubic-bezier(.3,1.6,.5,1) .9s both}
+@keyframes pop{from{transform:translateX(-50%) scale(.3);opacity:0}}
+body.open .rise{animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}}
+body.open .hero .eyebrow-w{animation-delay:1.1s}
+body.open h1{animation-delay:1.25s}
+body.open .lead{animation-delay:1.45s}
+
+@media (max-width:420px){.windows{gap:10px}.win{border-width:6px}.when b{font-size:17px}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.2s!important}
+}
+</style>
+</head>
+<body>
+<canvas id="leaves" aria-hidden="true"></canvas>
+
+<!-- GATE -->
+<section id="gate" class="pattern" aria-label="მოსაწვევის კარი">
+  <div class="top">
+    <div class="logo" role="img" aria-label="ინეს ბაღი"></div>
+    <div class="eyebrow">გიწვევთ ზეიმზე</div>
+  </div>
+  <div class="door" id="door">
+    <div class="frame"></div>
+    <div class="opening">
+      <div class="inner-light"></div>
+      <div class="leaf-door l"><span class="knob"></span></div>
+      <div class="leaf-door r"><span class="knob"></span></div>
+    </div>
+    <div class="keyglow"></div>
+    <span class="spark" style="left:-6%;top:22%;animation-delay:-.4s"></span>
+    <span class="spark" style="right:-4%;top:10%;animation-delay:-1.3s"></span>
+    <span class="spark" style="right:-10%;top:56%;animation-delay:-2s;width:12px;height:12px"></span>
+    <span class="spark" style="left:-12%;top:66%;animation-delay:-.9s;width:12px;height:12px"></span>
+    <span class="spark" style="left:46%;top:-9%;animation-delay:-1.7s"></span>
+  </div>
+  <button id="enter" type="button">შეაღე ჯადოსნური სამყაროს კარი</button>
+  <div class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>ჩართეთ ხმა — კარს მიღმა მელოდიაა</div>
+</section>
+
+<main id="world">
+  <section class="hero band">
+    <div class="col">
+      <div class="rainbow">
+        <svg viewBox="0 0 440 330" aria-hidden="true">
+          <path d="M18 330V218A202 202 0 0 1 422 218V330" stroke="var(--mint-deep)"/>
+          <path d="M52 330V218A168 168 0 0 1 388 218V330" stroke="var(--teal-pale)"/>
+          <path d="M86 330V218A134 134 0 0 1 354 218V330" stroke="var(--pink)"/>
+          <path d="M120 330V218A100 100 0 0 1 320 218V330" stroke="var(--yellow)"/>
+        </svg>
+        <div class="logo" role="img" aria-label="ინეს ბაღი"></div>
+      </div>
+      <div class="eyebrow-w rise">საშემოდგომო ზეიმი · 5–6 წლის ჯგუფი</div>
+      <h1 class="rise">შემოდგომა ჩვენს <em>პატარა სამყაროში</em></h1>
+      <p class="lead rise">ძვირფასო მშობლებო, გეპატიჟებით ჩვენს საშემოდგომო ზეიმზე!</p>
+    </div>
+  </section>
+  <div class="ground band" aria-hidden="true"></div>
+
+  <section class="story band">
+    <div class="col">
+      <p class="big">დილის წრეზე პატარებმა შემოდგომის ფერები, ნაყოფი და ბუნების ცვლილებები გაიცნეს. ახლა ყველაფერ ამას თქვენ გაგიზიარებენ.</p>
+      <div class="windows">
+        <div class="win"><img src="assets/img/kids-drawing.jpg" alt="ბავშვი ფერადი ფანქრით ხატავს"></div>
+        <div class="win"><img src="assets/img/paper-rainbow.jpg" alt="ფერადი ქაღალდის ნაგლეჯებით აწყობილი ცისარტყელა"></div>
+      </div>
+      <div class="chips" aria-label="რა გელით ზეიმზე">
+        <span class="chip"><i style="background:var(--yellow)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.4" stroke-linecap="round"><path d="M5 6h14M5 12h14M5 18h9"/></svg></i>ლექსები</span>
+        <span class="chip"><i style="background:var(--pink)"><svg viewBox="0 0 24 24" fill="var(--navy)"><path d="M9 17.5a3 3 0 1 1-2-2.83V5l11-2v11.5a3 3 0 1 1-2-2.83V6.3L9 7.6v9.9z"/></svg></i>სიმღერები</span>
+        <span class="chip"><i style="background:var(--mint-pale)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><path d="M4.5 9.5c5 2 10 2 15 0M4.5 14.5c5-2 10-2 15 0"/></svg></i>თამაშები</span>
+      </div>
+      <p>თითოეული ბავშვი თავის პატარა წვლილს შეიტანს საერთო დღესასწაულში. ერთად შევქმნათ ღიმილითა და ემოციებით სავსე დღე!</p>
+    </div>
+  </section>
+
+  <section class="details band">
+    <div class="col">
+      <div class="ticket">
+        <h2>სად გელით</h2>
+        <div class="place">
+          <div class="pin" aria-hidden="true"><span></span></div>
+          <div><b>ბავშვთა გასართობი ცენტრი „დონალდო“</b><small>ბათუმი მოლი, III სართული</small></div>
+        </div>
+        <div class="when" id="when" hidden>
+          <div><small>თარიღი</small><b id="w-date"></b><em id="w-day"></em></div>
+          <div><small>დრო</small><b id="w-time"></b></div>
+        </div>
+        <a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Batumi%20Mall%20Batumi" target="_blank" rel="noopener">რუკაზე ნახვა
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale band pattern">
+    <div class="col">
+      <div class="sign">
+        <svg viewBox="0 0 300 92" aria-hidden="true">
+          <defs><path id="arc" d="M8 92 Q150 -24 292 92"/></defs>
+          <text text-anchor="middle"><textPath href="#arc" startOffset="50%">სიყვარულით</textPath></text>
+        </svg>
+        <div class="logo" role="img" aria-label="ინეს ბაღი"></div>
+      </div>
+      <p>გელოდებით სიყვარულით, სიხარულითა და შემოდგომის განწყობით! <span class="heart">❤</span></p>
+      <div class="tap-hint">შეეხეთ ეკრანს და ფოთლები აფრინდება</div>
+    </div>
+  </section>
+</main>
+
+<button id="sound" type="button" aria-label="მუსიკის გამორთვა" hidden><span class="bars"><i></i><i></i><i></i></span></button>
+
+<script>
+/* ===== EDIT HERE: date & time (leave empty to hide) ===== */
+const EVENT = { date: "5 ნოემბერი", day: "ხუთშაბათი", time: "09:30" };
+
+(() => {
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (EVENT.date || EVENT.time) { $('#w-date').textContent = EVENT.date || '—'; $('#w-day').textContent = EVENT.day || ''; $('#w-time').textContent = EVENT.time || '—'; $('#when').hidden = false; }
+document.body.classList.add('locked');
+
+/* rainbow path lengths for draw animation */
+document.querySelectorAll('.rainbow path').forEach(p => { const L = p.getTotalLength(); p.style.setProperty('--len', L); p.style.strokeDasharray = L; });
+
+/* ================= LEAVES ================= */
+const cv = $('#leaves'), cx = cv.getContext('2d');
+let W = 0, H = 0, DPR = 1;
+function size(){ DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = W*DPR; cv.height = H*DPR; cx.setTransform(DPR,0,0,DPR,0,0); }
+size(); addEventListener('resize', size);
+const COLORS = ['#D2693C','#E9963E','#F2C14E','#C9572F','#E9A09F','#EDC39E','#EDE09D','#B5532B','#8EC7B7'];
+const leaves = [];
+let target = reduce ? 6 : 10;
+function mk(x, y, burst){
+  const s = 9 + Math.random()*13;
+  return { x: x ?? Math.random()*W, y: y ?? -30 - Math.random()*H*0.5, s,
+    vx: burst ? (Math.random()-.5)*7 : 0, vy: burst ? -4 - Math.random()*5 : .5 + Math.random()*.9,
+    ph: Math.random()*6.28, sw: .6 + Math.random()*1.4, rot: Math.random()*6.28, vr: (Math.random()-.5)*.05,
+    flip: Math.random()*6.28, vf: .02 + Math.random()*.04, c: COLORS[(Math.random()*COLORS.length)|0],
+    kind: Math.random() < .45 ? 1 : 0, burst: !!burst, life: 0 };
+}
+for (let i=0;i<target;i++){ const l = mk(); l.y = Math.random()*H; leaves.push(l); }
+function drawLeaf(l){
+  cx.save(); cx.translate(l.x, l.y); cx.rotate(l.rot); cx.scale(Math.cos(l.flip)*.85+.15*Math.sign(Math.cos(l.flip)||1), 1);
+  const s = l.s; cx.fillStyle = l.c; cx.beginPath();
+  if (l.kind === 1){ // maple-ish
+    const pts = [[0,-1],[.22,-.45],[.62,-.62],[.48,-.18],[.95,-.05],[.5,.2],[.6,.55],[.12,.38],[0,.62],[-.12,.38],[-.6,.55],[-.5,.2],[-.95,-.05],[-.48,-.18],[-.62,-.62],[-.22,-.45]];
+    pts.forEach((p,i)=> i ? cx.lineTo(p[0]*s,p[1]*s) : cx.moveTo(p[0]*s,p[1]*s)); cx.closePath(); cx.fill();
+  } else { // oval leaf
+    cx.moveTo(0,-s); cx.quadraticCurveTo(s*.75,-s*.1,0,s*.8); cx.quadraticCurveTo(-s*.75,-s*.1,0,-s); cx.fill();
+  }
+  cx.strokeStyle = 'rgba(15,43,53,.28)'; cx.lineWidth = 1.2; cx.beginPath(); cx.moveTo(0,-s*.75); cx.lineTo(0,s*1.05); cx.stroke();
+  cx.restore();
+}
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(3, (now - last)/16.7); last = now;
+  cx.clearRect(0,0,W,H);
+  while (leaves.filter(l=>!l.burst).length < target) leaves.push(mk());
+  for (let i = leaves.length-1; i>=0; i--){
+    const l = leaves[i]; l.life += dt;
+    if (l.burst){ l.vy += .12*dt; l.vx *= .985; if (l.vy > 1.2) l.vy = 1.2; }
+    l.ph += .02*dt; l.x += (l.vx + Math.sin(l.ph)*l.sw)*dt; l.y += l.vy*dt; l.rot += l.vr*dt; l.flip += l.vf*dt;
+    drawLeaf(l);
+    if (l.y > H + 40 || l.x < -60 || l.x > W + 60){ leaves.splice(i,1); }
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+function burst(x, y, n){ for (let i=0;i<n;i++) leaves.push(mk(x, y, true)); }
+
+/* ================= MUSIC ================= */
+let ac, master, rev, playing = false, nextT = 0, step = 0, timer;
+const BEAT = 60/96;
+const N = n => { const m = n.match(/([A-G])(#?)(\d)/); const i = {C:0,D:2,E:4,F:5,G:7,A:9,B:11}[m[1]] + (m[2]?1:0); return 440*Math.pow(2,(i + (+m[3]+1)*12 - 69)/12); };
+// original waltz in C major — [note, beats]
+const MEL = ("E5 1,G5 1,C6 1|B5 1.5,A5 .5,E5 1|F5 1,A5 1,C6 1|B5 2,G5 1|E5 1,G5 1,E6 1|D6 1.5,C6 .5,A5 1|G5 1,A5 .5,G5 .5,F5 1|G5 3|"
+  +"A5 1,C6 1,F6 1|E6 1.5,D6 .5,C6 1|D6 1,F5 1,A5 1|G5 2,B5 1|C6 1,E5 1,G5 1|A5 1,C6 1,E6 1|D6 1,C6 1,B5 1|C6 3").split('|').map(b=>b.split(',').map(x=>{const [n,d]=x.split(' ');return [n,+d]}));
+const CH = [['C3','E4','G4'],['A2','C4','E4'],['F2','A3','C4'],['G2','B3','D4'],['C3','E4','G4'],['A2','C4','E4'],['F2','A3','C4'],['G2','B3','D4'],
+            ['F2','A3','C4'],['C3','E4','G4'],['D3','F4','A4'],['G2','B3','D4'],['C3','E4','G4'],['A2','C4','E4'],['G2','B3','F4'],['C3','E4','G4']];
+function initAudio(){
+  ac = new (window.AudioContext || window.webkitAudioContext)();
+  master = ac.createGain(); master.gain.value = 0.55;
+  const comp = ac.createDynamicsCompressor(); master.connect(comp); comp.connect(ac.destination);
+  rev = ac.createConvolver(); const len = ac.sampleRate*2.6, buf = ac.createBuffer(2, len, ac.sampleRate);
+  for (let c=0;c<2;c++){ const d = buf.getChannelData(c); for (let i=0;i<len;i++) d[i] = (Math.random()*2-1)*Math.pow(1-i/len, 3); }
+  rev.buffer = buf; const rg = ac.createGain(); rg.gain.value = .45; rev.connect(rg); rg.connect(master);
+}
+function bell(t, f, vol, dec){
+  const g = ac.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t+.006); g.gain.exponentialRampToValueAtTime(.0001, t+dec);
+  [[1,1],[2.001,.28],[3.01,.08],[4.2,.03]].forEach(([m,a])=>{ const o = ac.createOscillator(), og = ac.createGain(); o.type='sine'; o.frequency.value = f*m; og.gain.value = a; o.connect(og); og.connect(g); o.start(t); o.stop(t+dec+.05); });
+  g.connect(master); g.connect(rev);
+}
+function soft(t, f, vol, dec, type='triangle'){
+  const o = ac.createOscillator(), g = ac.createGain(), lp = ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 900;
+  o.type = type; o.frequency.value = f; g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol, t+.03); g.gain.exponentialRampToValueAtTime(.0001, t+dec);
+  o.connect(lp); lp.connect(g); g.connect(master); g.connect(rev); o.start(t); o.stop(t+dec+.05);
+}
+function scheduleBar(i, t){
+  const bar = MEL[i % MEL.length], ch = CH[i % CH.length];
+  let b = 0; bar.forEach(([n,d]) => { bell(t + b*BEAT, N(n), .2, Math.max(1.1, d*BEAT*1.8)); b += d; });
+  soft(t, N(ch[0]), .22, BEAT*2.6);
+  soft(t + BEAT, N(ch[1]), .07, BEAT*1.2, 'sine'); soft(t + BEAT, N(ch[2]), .07, BEAT*1.2, 'sine');
+  soft(t + 2*BEAT, N(ch[1]), .06, BEAT*1.2, 'sine'); soft(t + 2*BEAT, N(ch[2]), .06, BEAT*1.2, 'sine');
+}
+function loop(){ while (nextT < ac.currentTime + .3){ scheduleBar(step++, nextT); nextT += 3*BEAT; } }
+function startMusic(at){ nextT = at; step = 0; playing = true; timer = setInterval(loop, 60); loop(); }
+function doorSfx(){
+  const t = ac.currentTime + .02;
+  // whoosh
+  const nb = ac.createBuffer(1, ac.sampleRate*1.6, ac.sampleRate), d = nb.getChannelData(0); for (let i=0;i<d.length;i++) d[i] = Math.random()*2-1;
+  const ns = ac.createBufferSource(); ns.buffer = nb; const bp = ac.createBiquadFilter(); bp.type='bandpass'; bp.Q.value = 1.2;
+  bp.frequency.setValueAtTime(300, t); bp.frequency.exponentialRampToValueAtTime(3200, t+1.3);
+  const ng = ac.createGain(); ng.gain.setValueAtTime(0,t); ng.gain.linearRampToValueAtTime(.18, t+.5); ng.gain.exponentialRampToValueAtTime(.001, t+1.5);
+  ns.connect(bp); bp.connect(ng); ng.connect(master); ng.connect(rev); ns.start(t); ns.stop(t+1.6);
+  // sparkle arpeggio
+  ['C6','D6','E6','G6','A6','C7','D7','E7','G7','A7'].forEach((n,i)=> bell(t + .15 + i*.07, N(n), .12, 1.6));
+  return t + 1.9;
+}
+function chime(){ if (!ac || !playing) return; const p = ['G6','A6','C7','D7','E7']; bell(ac.currentTime+.01, N(p[(Math.random()*p.length)|0]), .1, 1.4); }
+
+const sBtn = $('#sound');
+function setSound(on){
+  if (!ac) return;
+  if (on){ ac.resume(); master.gain.setTargetAtTime(.55, ac.currentTime, .1); sBtn.innerHTML = '<span class="bars"><i></i><i></i><i></i></span>'; sBtn.setAttribute('aria-label','მუსიკის გამორთვა'); }
+  else { master.gain.setTargetAtTime(0, ac.currentTime, .08); setTimeout(()=>{ if(!sOn) ac.suspend(); }, 400);
+    sBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6M16 9l6 6"/></svg>'; sBtn.setAttribute('aria-label','მუსიკის ჩართვა'); }
+}
+let sOn = true;
+sBtn.addEventListener('click', e => { e.stopPropagation(); sOn = !sOn; setSound(sOn); });
+document.addEventListener('visibilitychange', () => { if (!ac) return; if (document.hidden) ac.suspend(); else if (sOn) ac.resume(); });
+
+/* ================= DOOR ================= */
+const gate = $('#gate'), door = $('#door');
+let opened = false;
+function open(){
+  if (opened) return; opened = true;
+  let musicAt = 0;
+  try { initAudio(); ac.resume(); musicAt = doorSfx(); } catch(e) { ac = null; }
+  gate.classList.add('opening-now');
+  const r = door.getBoundingClientRect();
+  gate.style.transformOrigin = `${r.left + r.width/2}px ${r.top + r.height*0.62}px`;
+  setTimeout(() => burst(r.left + r.width/2, r.top + r.height*0.6, reduce ? 6 : 26), 650);
+  setTimeout(() => { gate.classList.add('zoom'); document.body.classList.remove('locked'); document.body.classList.add('open'); target = reduce ? 8 : 22; }, reduce ? 400 : 1250);
+  setTimeout(() => { gate.hidden = true; if (ac){ sBtn.hidden = false; startMusic(Math.max(musicAt, ac.currentTime + .05)); } }, reduce ? 900 : 2700);
+}
+$('#enter').addEventListener('click', open);
+door.addEventListener('click', open);
+
+/* tap anywhere → leaves + chime */
+document.addEventListener('pointerdown', e => {
+  if (!opened || e.target.closest('a,button')) return;
+  burst(e.clientX, e.clientY, reduce ? 3 : 9); chime();
+});
+})();
+</script>
+</body>
+</html>
